@@ -61,7 +61,8 @@ df_ratios <- df_students %>%
 
 ```{r}
 #arrange the box plots or any other type such as bars or violins in an in- or decreasing order to #simplify readability. Since the category “continent” does not have an intrinsic order, I rearrange #the box plots by their mean student-teacher ratio instead of sorting them alphabetically which is #the default:
-theme_set(theme_light(base_size = 18, base_family = "Poppins"))
+library(ggsci)
+theme_set(theme_light(base_size = 18, base_family = "Arial Black"))
   
 df_sorted <- df_ratios %>% 
   mutate(region=fct_reorder(region, -student_ratio_region))
@@ -69,11 +70,11 @@ df_sorted <- df_ratios %>%
 
 g <- ggplot(df_sorted, aes(y=region, x=student_ratio, color=region)) + 
   scale_x_continuous(limits = c(0,90), expand = c(0.007, 0.005)) +
-  scale_color_discrete() + 
+  scale_color_aaas() + 
   labs(x= "Student Teacher Ratio", y= NULL) +
   theme(legend.position = "none", 
         axis.title = element_text(size = rel(0.8)),
-        axis.text = element_text(size=16, family = "Poppins"),
+        axis.text = element_text(size=16, family = "Cochin"),
         panel.grid = element_blank())
 
   
@@ -91,11 +92,11 @@ world_avg <- df_sorted%>%summarize(avg=mean(student_ratio, na.rm=TRUE))%>%
 #  geom_point(aes(y=region, x=student_ratio_region, size=5)) +
 geom_segment(aes(x=world_avg, xend=student_ratio_region, y=region, yend=region), size=0.8) +
   
-  annotate(geom = "text", y =6.3, x=35, color="brown", family="Poppins", label=glue::glue("Worldwide Average:\n{round(world_avg,1)} students per teacher ratio"), lineheight = .9) +
+  annotate(geom = "text", y =6.3, x=35, color="brown", family="Cochin", label=glue::glue("Worldwide Average:\n{round(world_avg,1)} students per teacher ratio"), lineheight = .9) +
   
-  annotate(geom = "text", y =3.5, x=10.5, color="brown", family="Poppins", label=glue::glue("Continental Aveerage")) +
+  annotate(geom = "text", y =3.5, x=10.5, color="brown", family="Cochin", label=glue::glue("Continental Aveerage")) +
   
-  annotate(geom = "text", y =1.7, x=65, color="brown", family="Poppins", label=glue::glue("The Central African Republic has the \nhighest student per teacher ratio ")))
+  annotate(geom = "text", y =1.7, x=65, color="brown", family="Cochin", label=glue::glue("The Central African Republic has the \nhighest student per teacher ratio ")))
 
 
 
